@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Phone, MessageSquare } from "lucide-react";
 import { Reveal, RevealWords } from "@/components/site/Reveal";
 import { MagneticButton } from "@/components/site/MagneticButton";
 
@@ -92,9 +92,15 @@ export function Contact() {
         </div>
 
         <div className="mt-2">
-          <MagneticButton as="a" href="mailto:vyshnavimaddali185@gmail.com" variant="rose">
-            <Send className="h-4 w-4" />
-            Start a conversation
+          <MagneticButton
+            as="a"
+            href="https://wa.me/916300907595"
+            target="_blank"
+            rel="noreferrer noopener"
+            variant="rose"
+          >
+            <MessageSquare className="h-4 w-4" />
+            Contact me
           </MagneticButton>
         </div>
 
