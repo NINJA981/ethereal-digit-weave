@@ -15,7 +15,7 @@ const items = [
   {
     company: "Primesoft Inc",
     role: "Software Engineer",
-    period: "2021 — 2023",
+    period: "2022 — 2025",
     summary:
       "Built PAYAPT FedNow simulator and T-SOFT budgeting suite — modern SPAs with complex financial state and ISO 20022 message flows.",
     tech: ["React", "Redux", "FastAPI", "PostgreSQL"],
