@@ -128,7 +128,7 @@ export function About() {
 
               <dl className="mt-6 grid grid-cols-3 gap-3 text-xs">
                 {[
-                  ["3.8+", "Years"],
+                  ["4", "Years"],
                   ["10+", "Projects"],
                   ["∞", "Curiosity"],
                 ].map(([k, v]) => (
