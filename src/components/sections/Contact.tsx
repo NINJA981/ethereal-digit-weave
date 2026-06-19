@@ -19,7 +19,7 @@ export function Contact() {
   const [flying, setFlying] = useState(false);
 
   return (
-    <section id="contact" className="relative overflow-hidden py-32">
+    <section id="contact" className="relative overflow-hidden pt-32 pb-0">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-60 [background:var(--gradient-aurora)]"

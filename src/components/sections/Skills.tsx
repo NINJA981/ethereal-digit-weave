@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
 import { Reveal, RevealWords } from "@/components/site/Reveal";
 
 type Skill = { name: string; level: number; group: "Frontend" | "Backend" | "Tools" | "Data" };
@@ -28,9 +28,12 @@ const groupColors: Record<Skill["group"], string> = {
 
 export function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [rot, setRot] = useState({ x: -10, y: 0 });
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+
+  // Smooth mouse tilt using springs (avoids component re-renders)
+  const rx = useSpring(useMotionValue(-10), { stiffness: 80, damping: 20 });
+  const ry = useSpring(useMotionValue(0), { stiffness: 80, damping: 20 });
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -41,17 +44,40 @@ export function Skills() {
       const cy = r.top + r.height / 2;
       const dx = (e.clientX - cx) / r.width;
       const dy = (e.clientY - cy) / r.height;
-      setRot({ x: -10 + dy * 18, y: dx * 28 });
+      rx.set(-10 + dy * 18);
+      ry.set(dx * 28);
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [rx, ry]);
 
-  // arrange skills on tilted orbits
+  // Smooth continuous rotation using framer-motion animate
+  const rotationValue = useMotionValue(0);
+
+  useEffect(() => {
+    const controls = animate(rotationValue, 360, {
+      ease: "linear",
+      duration: 45, // Time in seconds for a full rotation
+      repeat: Infinity,
+    });
+    return () => controls.stop();
+  }, [rotationValue]);
+
+  // Transform rotation values for individual orbits to rotate at different speeds/directions
+  const r1 = useTransform(rotationValue, (r) => r);
+  const r2 = useTransform(rotationValue, (r) => -r * 0.75); // reverse & slower
+  const r3 = useTransform(rotationValue, (r) => r * 0.5);   // half-speed
+
+  // Counter-rotations to keep text always upright (0deg relative to screen)
+  const c1 = useTransform(r1, (r) => -r);
+  const c2 = useTransform(r2, (r) => -r);
+  const c3 = useTransform(r3, (r) => -r);
+
+  // Arrange skills on tilted orbits with their rotation/counter-rotation motion values
   const orbits = [
-    { radius: 130, count: 4, items: skills.slice(0, 4) },
-    { radius: 200, count: 4, items: skills.slice(4, 8) },
-    { radius: 270, count: 4, items: skills.slice(8, 12) },
+    { radius: 130, count: 4, items: skills.slice(0, 4), rotation: r1, counter: c1, tiltX: 12, tiltY: 10 },
+    { radius: 200, count: 4, items: skills.slice(4, 8), rotation: r2, counter: c2, tiltX: 24, tiltY: -10 },
+    { radius: 270, count: 4, items: skills.slice(8, 12), rotation: r3, counter: c3, tiltX: -12, tiltY: 20 },
   ];
 
   return (
@@ -70,7 +96,7 @@ export function Skills() {
         </h2>
         <Reveal delay={0.2}>
           <p className="mt-4 max-w-xl text-sm text-muted-foreground">
-            Move your cursor to orbit. Hover a planet to feel it pulse. Click to
+            Move your cursor to tilt. Hover a planet to feel it pulse. Click to
             reveal its mastery.
           </p>
         </Reveal>
@@ -84,11 +110,11 @@ export function Skills() {
             className="absolute inset-0"
             style={{
               transformStyle: "preserve-3d",
-              transform: `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
-              transition: "transform 0.4s var(--ease-silk, ease-out)",
+              rotateX: rx,
+              rotateY: ry,
             }}
           >
-            {/* core */}
+            {/* Core */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="relative h-32 w-32">
                 <div className="absolute inset-0 rounded-full [background:var(--gradient-lavender)] blur-2xl opacity-70 animate-pulse-glow" />
@@ -100,15 +126,17 @@ export function Skills() {
             </div>
 
             {orbits.map((orbit, oi) => (
-              <div
+              <motion.div
                 key={oi}
                 className="absolute inset-0"
                 style={{
-                  transform: `rotateX(${oi * 12}deg) rotateY(${oi * 10}deg)`,
+                  rotateX: orbit.tiltX,
+                  rotateY: orbit.tiltY,
+                  rotateZ: orbit.rotation,
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* ring */}
+                {/* Ring */}
                 <div
                   className="absolute left-1/2 top-1/2 rounded-full border border-foreground/10"
                   style={{
@@ -119,27 +147,30 @@ export function Skills() {
                   }}
                 />
                 {orbit.items.map((s, i) => {
-                  const angle = (i / orbit.count) * Math.PI * 2 + oi * 0.7;
+                  const angle = (i / orbit.count) * Math.PI * 2;
                   const x = Math.cos(angle) * orbit.radius;
                   const y = Math.sin(angle) * orbit.radius * 0.55;
                   const z = Math.sin(angle) * orbit.radius * 0.6;
                   const isH = hovered === s.name;
                   const isS = selected === s.name;
                   return (
-                    <button
+                    <motion.button
                       key={s.name}
                       onMouseEnter={() => setHovered(s.name)}
                       onMouseLeave={() => setHovered(null)}
                       onClick={() =>
                         setSelected((prev) => (prev === s.name ? null : s.name))
                       }
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full transition-transform"
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full"
                       style={{
-                        transform: `translate3d(${x}px, ${y}px, ${z}px) scale(${
-                          isH || isS ? 1.25 : 1
-                        })`,
+                        x,
+                        y,
+                        z,
+                        rotateZ: orbit.counter,
+                        scale: isH || isS ? 1.25 : 1,
                         transformStyle: "preserve-3d",
                       }}
+                      transition={{ type: "spring", stiffness: 260, damping: 20 }}
                     >
                       <span
                         className="relative grid h-14 w-14 place-items-center rounded-full text-[11px] font-medium text-aubergine shadow-[0_10px_30px_-5px_rgba(0,0,0,0.25)]"
@@ -154,14 +185,14 @@ export function Skills() {
                           {s.group} · {s.level}%
                         </span>
                       )}
-                    </button>
+                    </motion.button>
                   );
                 })}
-              </div>
+              </motion.div>
             ))}
           </motion.div>
 
-          {/* legend */}
+          {/* Legend */}
           <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-full glass px-4 py-2 text-[11px] text-muted-foreground">
             {(Object.keys(groupColors) as Skill["group"][]).map((g) => (
               <span key={g} className="inline-flex items-center gap-2">
