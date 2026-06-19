@@ -111,8 +111,12 @@ export function About() {
               <div className="mt-6 flex h-44 items-center justify-center">
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full blur-2xl [background:var(--gradient-rose-gold)] opacity-70" />
-                  <div className="relative grid h-32 w-32 place-items-center rounded-full [background:var(--gradient-lavender)] font-display text-6xl text-aubergine shadow-[var(--shadow-glow)]">
-                    S
+                  <div className="relative h-32 w-32 overflow-hidden rounded-full shadow-[var(--shadow-glow)] border-2 border-white/20">
+                    <img
+                      src="/pfp.jpeg"
+                      alt="Susmitha Sri Vyshnavi"
+                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
+                    />
                   </div>
                 </div>
               </div>

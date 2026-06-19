@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MapPin, Phone, Send, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { Reveal, RevealWords } from "@/components/site/Reveal";
 import { MagneticButton } from "@/components/site/MagneticButton";
 
@@ -11,9 +11,8 @@ const contacts = [
 ];
 
 const socials = [
-  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/" },
-  { icon: Github, label: "GitHub", href: "https://github.com/" },
-  { icon: Twitter, label: "X", href: "https://x.com/" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/maddali-susmitha-sri-vyshnavi-8497631b4/" },
+  { icon: Github, label: "GitHub", href: "https://github.com/Susmitha185" },
 ];
 
 export function Contact() {

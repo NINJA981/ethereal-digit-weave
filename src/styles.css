@@ -200,6 +200,13 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  
+  & span {
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 @utility text-gradient-lavender {
@@ -207,6 +214,13 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  
+  & span {
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 @utility aurora-bg {

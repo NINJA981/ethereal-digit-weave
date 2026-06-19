@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Download, Mail, Sparkles } from "lucide-react";
+import { ArrowDown, Download, Sparkles, MessageSquare } from "lucide-react";
 import { MagneticButton } from "@/components/site/MagneticButton";
 import { ParticleField } from "@/components/site/ParticleField";
 import { RevealWords } from "@/components/site/Reveal";
@@ -154,8 +154,14 @@ export function Hero() {
             <Download className="h-4 w-4" />
             Download resume
           </MagneticButton>
-          <MagneticButton as="a" href="#contact" variant="ghost">
-            <Mail className="h-4 w-4" />
+          <MagneticButton
+            as="a"
+            href="https://wa.me/916300907595"
+            target="_blank"
+            rel="noreferrer noopener"
+            variant="ghost"
+          >
+            <MessageSquare className="h-4 w-4" />
             Contact me
           </MagneticButton>
         </motion.div>
