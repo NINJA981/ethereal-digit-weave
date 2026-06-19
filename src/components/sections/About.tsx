@@ -4,7 +4,7 @@ import { Reveal, RevealWords } from "@/components/site/Reveal";
 import { Code2, Database, Sparkles, Workflow } from "lucide-react";
 
 const highlights = [
-  { icon: Code2, label: "3.8+ years building production-grade React apps." },
+  { icon: Code2, label: "4 years building production-grade React apps." },
   { icon: Database, label: "Django, DRF & FastAPI — clean APIs, calm databases." },
   { icon: Workflow, label: "Agile rituals, code reviews, mentorship." },
   { icon: Sparkles, label: "Generative AI integrations & intelligent workflows." },
