@@ -6,7 +6,7 @@ const items = [
   {
     company: "Buzzworks Services Pvt Ltd",
     role: "Full Stack Developer",
-    period: "2023 — Present",
+    period: "2025 — Present",
     summary:
       "Led front-end architecture on FlexyDial — a banking-grade dialer platform — and shipped RBAC, real-time dashboards and Django REST services.",
     tech: ["React", "Redux", "Django", "DRF", "MySQL"],

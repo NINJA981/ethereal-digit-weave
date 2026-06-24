@@ -5,7 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 type Stat = { value: number; suffix?: string; label: string; sub: string };
 
 const stats: Stat[] = [
-  { value: 3.8, suffix: "+", label: "Years of experience", sub: "Production engineering" },
+  { value: 4, suffix: "+", label: "Years of experience", sub: "Production engineering" },
   { value: 10, suffix: "+", label: "Enterprise applications", sub: "Banking · FinTech · Consumer" },
   { value: 4, suffix: "", label: "Tech stacks mastered", sub: "Front, back, data, AI" },
   { value: 100, suffix: "%", label: "Curiosity for what's next", sub: "Always shipping" },

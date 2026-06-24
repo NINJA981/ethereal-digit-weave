@@ -105,7 +105,7 @@ export function About() {
             <div style={{ transform: "translateZ(40px)" }} className="relative h-full">
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span className="font-mono">// portrait.tsx</span>
-                <span className="font-mono text-accent">v3.8</span>
+                <span className="font-mono text-accent">v4.0</span>
               </div>
 
               <div className="mt-6 flex h-44 items-center justify-center">
