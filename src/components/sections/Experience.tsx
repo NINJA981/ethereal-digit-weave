@@ -24,7 +24,7 @@ const items = [
   {
     company: "Primesoft Inc · Internship",
     role: "Software Engineer Intern",
-    period: "2021",
+    period: "2022",
     summary:
       "Shipped my first production React components, learned the discipline of code reviews and the joy of clean Git history.",
     tech: ["React", "JavaScript", "REST"],
